@@ -1,8 +1,10 @@
-class Assign extends Instruction{
-    String lhs;
-    Value rhs;
-    Assign(String s, Value x){
-	lhs = s;
-	rhs = x;
+class Assign extends Instruction {
+    // x = 10
+    final String lhs; // x
+    Value rhs; // 10
+
+    Assign(String s, Value x) {
+        lhs = s;
+        rhs = x;
     }
 }

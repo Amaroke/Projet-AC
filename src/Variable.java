@@ -1,11 +1,12 @@
-class Variable extends Value{
-    String var;
-    Variable(String s){
-	var = s;
+class Variable extends Value {
+    final String var;
+
+    Variable(String s) {
+        var = s;
     }
 
     @Override
-    public String toString(){
-	return "Variable " + var;
-    }   
+    public String toString() {
+        return "Variable " + var;
+    }
 }

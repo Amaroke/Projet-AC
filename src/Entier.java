@@ -1,11 +1,12 @@
 class Entier extends Value {
-    Integer x;
-    Entier(Integer s){
-	x = s;
+    final Integer x;
+
+    Entier(Integer s) {
+        x = s;
     }
 
     @Override
-    public String toString(){
-	return "Entier " +  x.toString();
+    public String toString() {
+        return "Entier " + x.toString();
     }
 }
