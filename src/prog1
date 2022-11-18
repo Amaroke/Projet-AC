@@ -1,5 +1,4 @@
-x=1
-w=4
-y=x-x
-x=y*w
-x =w
+x = 1
+w = 4
+y = x - x
+x = y * w

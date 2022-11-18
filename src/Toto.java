@@ -38,8 +38,8 @@ public class Toto {
                 }
             }
         }
-        int x = new Evaluator().eval(instructions);
-        System.out.println("\nLe résultat du programme est : x = " + x);
+       int x = new Evaluator().eval(instructions);
+       System.out.println("\nLe résultat du programme est : x = " + x);
     }
 
 }

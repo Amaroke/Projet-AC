@@ -8,31 +8,15 @@ public class Evaluator {
     int eval(Vector<Instruction> instructions) throws Exception {
         for (Instruction i : instructions) {
             if (i instanceof Assign assign) {
-                variables.put(assign.lhs, ((Entier) assign.rhs).x);
+                if (assign.rhs instanceof Variable) {
+                    variables.put(assign.lhs, variables.get(((Variable) assign.rhs).var));
+                } else {
+                    variables.put(assign.lhs, ((Entier) assign.rhs).x);
+                }
             } else {
                 AssignOperator assignOperator = (AssignOperator) i;
-                int t0Value;
-                int t1Value;
-                if (assignOperator.t0 instanceof Variable) {
-                    String t0 = ((Variable) assignOperator.t0).var;
-                    if (variables.containsKey(t0)) {
-                        t0Value = variables.get(t0);
-                    } else {
-                        throw new Exception("La variable t0 n'existe pas");
-                    }
-                } else {
-                    t0Value = ((Entier) assignOperator.t0).x;
-                }
-                if (assignOperator.t1 instanceof Variable) {
-                    String t1 = ((Variable) assignOperator.t1).var;
-                    if (variables.containsKey(t1)) {
-                        t1Value = variables.get(t1);
-                    } else {
-                        throw new Exception("La variable t1 n'existe pas");
-                    }
-                } else {
-                    t1Value = ((Entier) assignOperator.t1).x;
-                }
+                int t0Value = getValueT(assignOperator.t0);
+                int t1Value = getValueT(assignOperator.t1);
                 switch (assignOperator.op.charAt(0)) {
                     case '+' -> variables.put(assignOperator.lhs, t0Value + t1Value);
                     case '-' -> variables.put(assignOperator.lhs, t0Value - t1Value);
@@ -42,5 +26,18 @@ public class Evaluator {
             }
         }
         return variables.getOrDefault("x", 0);
+    }
+
+    public int getValueT(Value t) throws Exception {
+        if (t instanceof Variable) {
+            String stringT = ((Variable) t).var;
+            if (variables.containsKey(stringT)) {
+                return variables.get(stringT);
+            } else {
+                throw new Exception("La variable " + stringT + " n'existe pas");
+            }
+        } else {
+            return ((Entier) t).x;
+        }
     }
 }

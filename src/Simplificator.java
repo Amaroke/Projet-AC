@@ -3,125 +3,119 @@ import java.util.Objects;
 import java.util.Vector;
 
 public class Simplificator {
-
-    Vector<Instruction> instructions = new Vector<Instruction>();
+    final Vector<Instruction> instructions = new Vector<>();
     final HashMap<String, Integer> variables = new HashMap<>();
 
     Vector<Instruction> simplify(Vector<Instruction> instructions) throws Exception {
         for (Instruction i : instructions) {
             if (i instanceof Assign assign) {
-                if(((Entier) assign.rhs).x == 1  || ((Entier) assign.rhs).x == 0){
+                if (assign.rhs instanceof Variable) {
                     this.instructions.add(i);
-                    variables.put(assign.lhs, ((Entier) assign.rhs).x);
+                    variables.put(assign.lhs, variables.get(((Variable) assign.rhs).var));
                 } else {
-                    this.instructions.add(i);
-                    variables.put(assign.lhs, -1);
+                    if (((Entier) assign.rhs).x == 1 || ((Entier) assign.rhs).x == 0) {
+                        this.instructions.add(i);
+                        variables.put(assign.lhs, ((Entier) assign.rhs).x);
+                    } else {
+                        this.instructions.add(i);
+                        variables.put(assign.lhs, -1);
+                    }
                 }
             } else {
                 AssignOperator assignOperator = (AssignOperator) i;
-                int t0Value;
-                int t1Value;
-                if (assignOperator.t0 instanceof Variable) {
-                    String t0 = ((Variable) assignOperator.t0).var;
-                    if (variables.containsKey(t0)) {
-                        t0Value = this.variables.get(t0);
-                    } else {
-                        System.out.println(t0);
-                        throw new Exception("La variable t0 n'existe pas");
-                    }
-                } else {
-                    t0Value = ((Entier) assignOperator.t0).x;
-                }
-                if (assignOperator.t1 instanceof Variable) {
-                    String t1 = ((Variable) assignOperator.t1).var;
-                    if (variables.containsKey(t1)) {
-                        t1Value = variables.get(t1);
-                    } else {
-                        throw new Exception("La variable t1 n'existe pas");
-                    }
-                } else {
-                    t1Value = ((Entier) assignOperator.t1).x;
-                }
-                boolean x_inc_op_1_1_op_inc = ((t0Value != 0 && t0Value != 1) && t1Value == 1) || ((t1Value != 0 && t1Value != 1) && t0Value == 1);
-                System.out.println("test:" + assignOperator.op.charAt(0));
+                int t0Value = getValueT(assignOperator.t0);
+                int t1Value = getValueT(assignOperator.t1);
+                boolean t0Equal0 = (t0Value == 0);
+                boolean t1Equal0 = (t1Value == 0);
+                boolean t0Equal1 = (t0Value == 1);
+                boolean t1Equal1 = (t1Value == 1);
+                boolean t0Andt1Equal0 = t0Equal0 && t1Equal0;
+                boolean t0Ort1Equal0 = !t0Andt1Equal0 && (t0Equal0 || t1Equal0);
+                boolean t0Andt1Equal1 = t0Equal1 && t1Equal1;
+                boolean t0Ort1Equal1 = !t0Andt1Equal1 && (t0Equal1 || t1Equal1);
                 switch (assignOperator.op.charAt(0)) {
-                    case '+': {
-                        if (t0Value == t1Value && t0Value == 0) { // X = 0 + 0
+                    case '+' -> {
+                        if (t0Andt1Equal0) { // X = 0 + 0
                             variables.put(assignOperator.lhs, 0);
-                            this.instructions.add(i);
-                        } else if ((t0Value == 0 && t1Value == 1) || (t0Value == 1 && t1Value == 0)) { // X = 0 + 1 OU X = 1 + 0
+                            this.instructions.add(new Assign(assignOperator.lhs, new Entier(0)));
+                        } else if (t0Ort1Equal0 && t0Ort1Equal1) { // X = 0 + 1 OR X = 1 + 0
                             variables.put(assignOperator.lhs, 1);
                             this.instructions.add(i);
-                        } else if (x_inc_op_1_1_op_inc) { // X = inc + 1 OU 1 + inc
+                        } else { // X = inc + 0 OR X = 0 + inc OR X = inc + inc OR 1 + 1 OR X = inc + 1 OR 1 + inc
                             variables.put(assignOperator.lhs, -1);
-                            System.out.println("3");
-                        } else if (t0Value != 0 && t0Value != 1 && t1Value != 0) { // X = inc + inc
-                            variables.put(assignOperator.lhs, -1);
-                            System.out.println("4");
-                        } else if (t0Value != 0 && t0Value != 1 || t1Value != 1) { // X = inc + 0 OU 0 + inc
-                            variables.put(assignOperator.lhs, -1);
-                            System.out.println("5");
                         }
-                        break;
                     }
-                    case '-': {
-                        if(t0Value == t1Value && t0Value == 0){ // X = 0 - 0
+                    case '-' -> {
+                        if (t0Andt1Equal0) { // X = 0 - 0
                             variables.put(assignOperator.lhs, 0);
-                            this.instructions.add(i);
-                            System.out.println("6");
-                        } else if(t0Value == t1Value && t0Value == 1){ // X = 1 - 1
-                            variables.put(assignOperator.lhs, 0);
-                            this.instructions.add(i);
-                            System.out.println("7");
-                        } else if((t0Value == 0 && t1Value == 1)|| (t0Value == 1 && t1Value == 0)) { // X = 0 - 1 OU X = 1 - 0
+                            this.instructions.add(new Assign(assignOperator.lhs, new Entier(0)));
+                        } else if (t0Equal1 && t1Equal0) { // X = 1 - 0
                             variables.put(assignOperator.lhs, 1);
-                            this.instructions.add(i);
-                            System.out.println("8");
-                        } else if(x_inc_op_1_1_op_inc) { // X = inc - 1
-                            variables.put(assignOperator.lhs, -1);
-                        } else if(t0Value != 0 && t0Value != 1 && t1Value != 0) { // X = inc - inc
+                            this.instructions.add(new Assign(assignOperator.lhs, new Entier(1)));
+                        } else if (t0Value == t1Value && t0Value == 1) { // X = 1 - 1
                             variables.put(assignOperator.lhs, 0);
-                            this.instructions.add(i);
-                            System.out.println("9");
-                        } else if (t0Value != 0 || t1Value != 1) { // X = inc - 0 OU 0 - inc
+                            this.instructions.add(new Assign(assignOperator.lhs, new Entier(0)));
+                        } else { // X = 0 - 1 OR X = inc - 1 OR inc - inc OR inc - 0
                             variables.put(assignOperator.lhs, -1);
-                            System.out.println("10");
+                            this.instructions.add(i);
                         }
-                        break;
                     }
-                    case '*': {
-                        if(t0Value == t1Value && t0Value == 0){ // X = 0 * 0
+                    case '*' -> {
+                        if (t0Equal0 || t1Equal0) { // X = 0 * 0 OR X = 1 * 0 OR X = 0 * 1 OR X = inc * 0 OR X = 0 * inc
                             variables.put(assignOperator.lhs, 0);
-                            this.instructions.add(i);
-                            System.out.println("11");
-                        } else if((t0Value == 0 && t1Value == 1)|| (t0Value == 1 && t1Value == 0)) { // X = 0 * 1 OU X = 1 * 0
-                            variables.put(assignOperator.lhs, 0);
-                            this.instructions.add(i);
-                            System.out.println("12");
-                        } else if(x_inc_op_1_1_op_inc) { // X = inc * 1 OU 1 * inc
+                            this.instructions.add(new Assign(assignOperator.lhs, new Entier(0)));
+                        } else if (t0Equal1 && t1Equal1) { // X = 1 * 1
+                            variables.put(assignOperator.lhs, 1);
+                            this.instructions.add(new Assign(assignOperator.lhs, new Entier(1)));
+                        } else if (t0Equal1 || t1Equal1) { // X = 1 * inc OR X = inc * 1
                             variables.put(assignOperator.lhs, -1);
-                            System.out.println("13");
-                        } else if(t0Value != 0 && t0Value != 1 && t1Value != 0) { // X = inc * inc
+                            this.instructions.add(i);
+                        } else { // X = inc * 1 OR 1 * inc OR X = inc * inc
                             variables.put(assignOperator.lhs, -1);
-                            System.out.println("14");
-                        } else if ((t0Value != 0 && t0Value != 1 && t1Value == 0) || (t1Value != 0 && t1Value != 1 && t0Value == 0)) { // X = inc * 0 OU 0 * inc
-                            System.out.println("15");
-                            if(Objects.equals(assignOperator.lhs, "x")){
-                                this.instructions.clear();
-                                variables.put(assignOperator.lhs, 0);
-                                this.instructions.add(new Assign("x", new Entier(0)));
-                            } else {
-                                variables.put(assignOperator.lhs, 0);
-                                this.instructions.add(i);
-                            }
+                            this.instructions.add(i);
                         }
-                        break;
                     }
-                    default : throw new Exception("Erreur dans l'opérateur");
+                    default -> throw new Exception("Erreur dans l'opérateur");
                 }
             }
+        }
+        boolean instructionsClear = false;
+        while (!instructionsClear) {
+            int i;
+            int instructionSize = this.instructions.size() - 1;
+            for (i = 0; i < instructionSize; i++) {
+                boolean instructionIToDelete = true;
+                Instruction instructionI = this.instructions.get(i);
+                String instructionVarI = (instructionI instanceof Assign) ? ((Assign) instructionI).lhs : ((AssignOperator) instructionI).lhs;
+                for (int j = i + 1; j < this.instructions.size(); j++) {
+                    Instruction instructionJ = this.instructions.get(j);
+                    String t0Var = (instructionJ instanceof AssignOperator) ? (((AssignOperator) instructionJ).t0 instanceof Variable) ? ((Variable) ((AssignOperator) instructionJ).t0).var : "" : (instructionJ instanceof Assign) ? (((Assign) instructionJ).rhs instanceof Variable) ? ((Variable) ((Assign) instructionJ).rhs).var : "" : "";
+                    String t1Var = (instructionJ instanceof AssignOperator) ? (((AssignOperator) instructionJ).t1 instanceof Variable) ? ((Variable) ((AssignOperator) instructionJ).t1).var : "" : (instructionJ instanceof Assign) ? (((Assign) instructionJ).rhs instanceof Variable) ? ((Variable) ((Assign) instructionJ).rhs).var : "" : "";
+                    if ((Objects.equals(instructionVarI, t0Var)) || (Objects.equals(instructionVarI, t1Var))) {
+                        instructionIToDelete = false;
+                        break;
+                    }
+                }
+                if (instructionIToDelete) {
+                    this.instructions.remove(i);
+                    break;
+                }
+            }
+            instructionsClear = (i == instructionSize);
         }
         return this.instructions;
     }
 
+    public int getValueT(Value t) throws Exception {
+        if (t instanceof Variable) {
+            String stringT = ((Variable) t).var;
+            if (variables.containsKey(stringT)) {
+                return variables.get(stringT);
+            } else {
+                throw new Exception("La variable " + stringT + " n'existe pas");
+            }
+        } else {
+            return ((Entier) t).x;
+        }
+    }
 }
