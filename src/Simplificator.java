@@ -8,6 +8,7 @@ public class Simplificator {
 
     Vector<Instruction> simplify(Vector<Instruction> instructions) throws Exception {
         for (Instruction i : instructions) {
+            // On ajoute toutes les asignations.
             if (i instanceof Assign assign) {
                 if (assign.rhs instanceof Variable) {
                     this.instructions.add(i);
@@ -21,7 +22,7 @@ public class Simplificator {
                         variables.put(assign.lhs, -1);
                     }
                 }
-            } else {
+            } else { // On ajoute les opérations utiles.
                 AssignOperator assignOperator = (AssignOperator) i;
                 int t0Value = getValueT(assignOperator.t0);
                 int t1Value = getValueT(assignOperator.t1);
@@ -40,9 +41,20 @@ public class Simplificator {
                             this.instructions.add(new Assign(assignOperator.lhs, new Entier(0)));
                         } else if (t0Ort1Equal0 && t0Ort1Equal1) { // X = 0 + 1 OR X = 1 + 0
                             variables.put(assignOperator.lhs, 1);
-                            this.instructions.add(i);
-                        } else { // X = inc + 0 OR X = 0 + inc OR X = inc + inc OR 1 + 1 OR X = inc + 1 OR 1 + inc
+                            this.instructions.add(new Assign(assignOperator.lhs, new Entier(1)));
+                        } else if(t0Ort1Equal0){ // X = inc + 0 OR X = 0 + inc
                             variables.put(assignOperator.lhs, -1);
+                            this.instructions.add(new Assign(assignOperator.lhs, new Entier(t1Value)));
+                        } else if(t0Andt1Equal1) { // X = 1 + 1
+                            variables.put(assignOperator.lhs, -1);
+                            this.instructions.add(new AssignOperator(assignOperator.lhs, "+", new Entier(1), new Entier(1)));
+                        } else { // X = inc + inc OR X = inc + 1 OR 1 + inc
+                            variables.put(assignOperator.lhs, -1);
+                            if(t0Equal1) {
+                                this.instructions.add(new AssignOperator(assignOperator.lhs, "+", new Entier(1), new Entier(t1Value)));
+                            } else {
+                                this.instructions.add(new AssignOperator(assignOperator.lhs, "+", new Entier(t0Value), new Entier(1)));
+                            }
                         }
                     }
                     case '-' -> {
@@ -79,6 +91,24 @@ public class Simplificator {
                 }
             }
         }
+
+        // On supprime toutes les instructions qui sont après la dernière affectation de x.
+        int lastXPosition = -1;
+        for(int i = 0; i < this.instructions.size(); i++) {
+            Instruction instructionI = this.instructions.get(i);
+            String instructionVarI = (instructionI instanceof Assign) ? ((Assign) instructionI).lhs : ((AssignOperator) instructionI).lhs;
+            if (instructionVarI.equals("x")) {
+                lastXPosition = i;
+            }
+        }
+        if(lastXPosition == -1) {
+            throw new Exception("Pas d'affectation de x dans le programme");
+        }
+        while(lastXPosition+1 != this.instructions.size()) {
+            this.instructions.remove(lastXPosition+1);
+        }
+
+        // On supprime ensuite toutes les instructions inutiles (qui ne sont pas utiles à la dernière affectation de x).
         boolean instructionsClear = false;
         while (!instructionsClear) {
             int i;

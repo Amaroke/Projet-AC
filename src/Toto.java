@@ -24,7 +24,7 @@ public class Toto {
 
     public static void main(String[] args) throws Exception {
         boolean printOn = true;
-        Vector<Instruction> instructions = Parser.parse(FileToString("src/prog1"));
+        Vector<Instruction> instructions = Parser.parse(FileToString(args[0]));
         instructions = new Simplificator().simplify(instructions);
         for (Instruction i : instructions) {
             if (i instanceof Assign assign) {
