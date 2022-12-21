@@ -140,10 +140,11 @@ public class Simplificator {
                                 this.instructions.add(new AssignOperator(assignOperator.lhs,
                                         "+", new Entier(1),
                                         new Entier(t1Value)));
+                            } else if (t1Equal1) {
+                              this.instructions.add(new AssignOperator(assignOperator.lhs, "+",
+                                      new Entier(t0Value), new Entier(1)));
                             } else {
-                                this.instructions.add(new AssignOperator(assignOperator.lhs,
-                                        "+", new Entier(t0Value),
-                                        new Entier(1)));
+                              this.instructions.add(i);
                             }
                         }
                     }
@@ -219,7 +220,10 @@ public class Simplificator {
                         ? ((Assign) instructionI).lhs :
                         ((AssignOperator) instructionI).lhs;
                 for (int j = i + 1; j < this.instructions.size(); j++) {
-                    Instruction instructionJ = this.instructions.get(j);
+                  Instruction instructionJ = this.instructions.get(j);
+                  String instructionVarJ = (instructionJ instanceof Assign) ?
+                          ((Assign) instructionJ).lhs :
+                          ((AssignOperator) instructionJ).lhs;
                   String t0Var = (instructionJ instanceof AssignOperator) ?
                           (((AssignOperator) instructionJ).t0 instanceof Variable)
                                   ? ((Variable) ((AssignOperator) instructionJ).t0).var
@@ -234,11 +238,13 @@ public class Simplificator {
                           (((Assign) instructionJ).rhs instanceof Variable) ?
                                   ((Variable) ((Assign) instructionJ).rhs).var
                                   : "" : "";
-                  if ((Objects.equals(instructionVarI, t0Var)) ||
-                          (Objects.equals(instructionVarI, t1Var))) {
-                        instructionIToDelete = false;
-                        break;
-                    }
+                  if ((Objects.equals(instructionVarI, t0Var)) || (Objects.equals(instructionVarI, t1Var))) {
+                    instructionIToDelete = false;
+                    break;
+                  }
+                  if (instructionVarI.equals(instructionVarJ)) {
+                    break;
+                  }
                 }
                 if (instructionIToDelete) {
                     this.instructions.remove(i);

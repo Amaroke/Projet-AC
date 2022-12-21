@@ -52,8 +52,10 @@ public class Simplificator {
                             variables.put(assignOperator.lhs, -1);
                             if (t0Equal1) {
                                 this.instructions.add(new AssignOperator(assignOperator.lhs, "+", new Entier(1), new Entier(t1Value)));
-                            } else {
+                            } else if (t1Equal1) {
                                 this.instructions.add(new AssignOperator(assignOperator.lhs, "+", new Entier(t0Value), new Entier(1)));
+                            } else {
+                                this.instructions.add(i);
                             }
                         }
                     }
@@ -119,10 +121,14 @@ public class Simplificator {
                 String instructionVarI = (instructionI instanceof Assign) ? ((Assign) instructionI).lhs : ((AssignOperator) instructionI).lhs;
                 for (int j = i + 1; j < this.instructions.size(); j++) {
                     Instruction instructionJ = this.instructions.get(j);
+                    String instructionVarJ = (instructionJ instanceof Assign) ? ((Assign) instructionJ).lhs : ((AssignOperator) instructionJ).lhs;
                     String t0Var = (instructionJ instanceof AssignOperator) ? (((AssignOperator) instructionJ).t0 instanceof Variable) ? ((Variable) ((AssignOperator) instructionJ).t0).var : "" : (instructionJ instanceof Assign) ? (((Assign) instructionJ).rhs instanceof Variable) ? ((Variable) ((Assign) instructionJ).rhs).var : "" : "";
                     String t1Var = (instructionJ instanceof AssignOperator) ? (((AssignOperator) instructionJ).t1 instanceof Variable) ? ((Variable) ((AssignOperator) instructionJ).t1).var : "" : (instructionJ instanceof Assign) ? (((Assign) instructionJ).rhs instanceof Variable) ? ((Variable) ((Assign) instructionJ).rhs).var : "" : "";
                     if ((Objects.equals(instructionVarI, t0Var)) || (Objects.equals(instructionVarI, t1Var))) {
                         instructionIToDelete = false;
+                        break;
+                    }
+                    if (instructionVarI.equals(instructionVarJ)) {
                         break;
                     }
                 }
