@@ -17,6 +17,9 @@ public class Parser {
                 if (rhs.contains("+")) operator = "+";
                 if (rhs.contains("-")) operator = "-";
                 String[] terms = rhs.split(Pattern.quote(operator));
+                for (var i = 0; i < terms.length; i++) {
+                    terms[i] = escape(terms[i]);
+                }
                 Value t0, t1;
                 if (terms[0].matches("[a-z]*")) t0 = new Variable(terms[0]);
                 else t0 = new Entier(Integer.parseInt(terms[0]));
@@ -35,5 +38,8 @@ public class Parser {
         return v;
     }
 
+    private static String escape(String word) {
+        return word.replaceAll("([\\r\\n])", "").trim();
+    }
 
 }
