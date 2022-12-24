@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="partie-ii">Partie II :</h1>
+<h3 id="q1">Q1.</h3>
+<p>Pour montrer que les deux problèmes (P1) et (P2) sont équivalents, on peut définir le coût de l'essence au sommet s' comme étant égal au coût de l'essence au sommet s, c(s'). La distance d(s', s) est définie comme étant égale à la quantité d'essence μs contenue dans le réservoir au départ de s dans le problème (P1).
+Ainsi, dans le problème (P1), le trajet peut être considéré comme commençant au nœud s', avec un réservoir plein, et se terminant au nœud t. Dans le problème (P2), le trajet peut être considéré comme commençant au nœud s, avec un réservoir vide, et se terminant au nœud t.
+Le nombre d'arrêts dans le problème (P1) est égal au nombre d'arrêts dans le problème (P2) plus un, car dans le problème (P1), il y a un arrêt supplémentaire au nœud s' pour remplir le réservoir.
+En résumé, en ajoutant le nœud s' relié à s et en définissant le coût de l'essence au sommet s' comme étant égal au coût de l'essence au sommet s, on peut montrer que les deux problèmes (P1) et (P2) sont équivalents, et que le nombre d'arrêts dans le problème (P1) est égal au nombre d'arrêts dans le problème (P2) plus un.</p>
+<h3 id="q2">Q2.</h3>
+<p>Pour montrer que la stratégie optimale consiste à arriver à destination t avec un réservoir vide, on peut utiliser un raisonnement par l'absurde.
+Supposons qu'il existe une stratégie optimale qui consiste à arriver à destination t avec un réservoir non vide.
+Si la quantité d'essence dans le réservoir est supérieure à 0, cela signifie qu'il est possible de continuer à parcourir une certaine distance avec cette essence même après être arrivé à destination t.
+Ce qui revient à dire qu'il est possible de réduire le coût total du voyage en utilisant cette essence restante.
+Or si cette essence pourrait servir à rendre le voyage moins chère cela veut dire que cette stratégie n’est pas optimal.
+La seule possibilité restante est donc que la stratégie optimale consiste à arriver à destination t avec un réservoir vide.
+En conclusion, la stratégie optimale consiste à arriver à destination t avec un réservoir vide.</p>
+<h3 id="q3">Q3.</h3>
+<p>C[u, q, g] = Coût minimum du voyage pour partir de u à t en utilisant q arrêts pour remplir le réservoir,
+sachant qu’on arrive à u avec g unités d'essence (km) et u est l'un des q arrêts</p>
+<p>Cout de la solution optimale = C[t, Q, 0]</p>
+<ul>
+<li>u doit être égal à t, car c'est la destination finale du voyage.</li>
+<li>Q est le nombre maximal d’arrêts autorisés.</li>
+<li>et g doit être égal à 0, car la stratégie optimale consiste à arriver à destination t avec un réservoir vide.</li>
+</ul>
+<h3 id="q4">Q4.</h3>
+<p>C[u, q, g] = min { C[v, q-1, h] + c(u) * (U-h) + d(u, v) }
+pour tous les sommets v atteignables depuis u avec une quantité d'essence h dans le réservoir (h ≤ U).</p>
+<p>C[v, q-1, h] représente le coût minimum du voyage pour partir de v à t en utilisant q-1 arrêts pour remplir le réservoir, sachant qu'on arrive à v avec h unités d'essence (km). c(u) est le coût de l'essence au sommet u et d(u, v) est la distance entre les sommets u et v. U est la capacité du réservoir, c'est-à-dire la distance totale que peut parcourir le véhicule avec un réservoir plein.</p>
+<h3 id="q5">Q5.</h3>
+<p>Pour initialiser la fonction coût C[u, q, g], nous pouvons utiliser les valeurs suivantes :
+u = s (sommet de départ), alors C[s, q, g] = 0 pour tous les entiers q et g. Cette initialisation correspond au cas où nous sommes au sommet de départ et n'avons pas encore entamé notre voyage. On peut également mettre g = 0, c’est ce que nous avons déterminer à la Q1.</p>
+<h3 id="q6">Q6.</h3>
+<p>La complexité de ce programme dynamique sera en O(V * K * U), où V est le nombre de sommets du graphe et K et U sont respectivement le nombre maximal d'arrêts pour remplir le réservoir et la capacité du réservoir. Cette complexité est due au fait que nous devons parcourir tous les sommets du graphe, tous les arrêts possibles pour remplir le réservoir et toutes les quantités d'essence possibles (de 0 à U) pour remplir la table de la fonction coût C[u, q, g].</p>
+<h3 id="q7">Q7.</h3>
+<p>Au lieu de considérer chaque valeur de g ∈ [0,U], nous pouvons choisir de discrétiser les valeurs de g en tranches de X unités (par exemple, X = 10). Cela signifie que nous considérerons uniquement les valeurs de g qui sont multiples de X (par exemple, 0, 10, 20, 30, etc.).
+En utilisant cette approche de discrétisation, nous réduisons le nombre de valeurs de g que nous devons considérer, ce qui peut réduire la complexité de notre programme dynamique.
+Cependant, même avec la discrétisation des valeurs de g, l'utilisation de l'état C[u, q, g] peut encore mener à un programme dynamique de complexité pseudo-polynomial. En effet, la complexité de ce programme dynamique dépend toujours du nombre de sommets du graphe V et du nombre maximal d'arrêts pour remplir le réservoir K. Si V et K sont des entiers de grande taille, la complexité de notre programme dynamique peut être encore considérée comme pseudo-polynomiale.
+Par exemple, si V = 10000 et K = 1000, la complexité de notre programme dynamique sera en O(V * K * U / X) = O(10^9), ce qui est encore considéré comme pseudo-polynomial.
+En conclusion, même avec la discrétisation des valeurs de g, l'utilisation de l'état C[u, q, g] peut encore mener à un programme dynamique de complexité pseudo-polynomiale si V et K sont des entiers de grande taille.</p>
+<h3 id="q8">Q8.</h3>
+<p>Pour montrer que la stratégie proposée est optimale pour décider de la quantité d'essence à remplir à chaque arrêt, nous allons utiliser une démonstration par l'absurde. Nous allons supposer que la stratégie proposée n'est pas optimale et montrer que cela contredit l'hypothèse selon laquelle la solution optimale utilise au plus k arrêts.</p>
+<p>Commençons par l'arrêt ul, où nous devons remplir juste assez d'essence pour atteindre t avec un réservoir vide. Si nous remplissons plus d'essence que ce qui est nécessaire, cela signifie que nous avons acheté de l'essence à un coût supérieur à ce qui était nécessaire. Cela implique que nous aurons un coût total plus élevé que la solution optimale, ce qui contredit l'hypothèse selon laquelle la solution optimale utilise au plus k arrêts.</p>
+<p>Passons maintenant aux arrêts précédents ul-1, ul-2, etc. Pour chaque arrêt uj (j &lt; l), nous avons deux possibilités :</p>
+<ul>
+<li>Si c(uj) &lt; c(uj+1), nous devons faire le plein à uj pour minimiser le coût total du voyage. Cela est logique car nous avons la possibilité d'acheter de l'essence à un coût inférieur à celui que nous devrons payer à l'arrêt suivant</li>
+<li>c(uj) ≥ c(uj+1). Dans ce cas, nous devons mettre juste assez d'essence pour atteindre uj+1. Si nous mettons plus d'essence que ce qui est nécessaire, cela signifie que nous avons acheté de l'essence à un coût supérieur à ce qui était nécessaire. Cela implique que nous aurons un coût total plus élevé que la solution optimale, ce qui contredit l'hypothèse selon laquelle la solution optimale utilise au plus k arrêts.</li>
+</ul>
+<p>En résumé, nous avons montré que, dans tous les cas, la stratégie proposée est optimale pour décider de la quantité d'essence à remplir à chaque arrêt. Autrement, cela entraînerait un coût total plus élevé que la solution optimale, ce qui contredit l'hypothèse selon laquelle la solution optimale utilise au plus k arrêts. Par conséquent, nous pouvons conclure que la stratégie proposée est bien optimale pour décider de la quantité d'essence à remplir à chaque arrêt.</p>
+<h3 id="q9">Q9.</h3>
+<p>La formule d'initialisation de la récurrence C[u, q, g] permet de définir la valeur de la fonction coût pour le cas où q = 1, c'est-à-dire lorsqu'il n'y a qu'un seul arrêt de remplissage. Dans ce cas, si g est inférieur ou égal à la distance entre u et t et inférieur ou égal à la capacité du réservoir U, alors la valeur de C[u, q, g] est égale à la distance entre u et t moins g multipliée par le coût de l'essence au nœud u. Sinon, si g est supérieur à la distance entre u et t ou supérieur à la capacité du réservoir U, la valeur de C[u, q, g] est définie comme étant infinie, car il n'est pas possible de parcourir une distance supérieure à la capacité du réservoir ou d'atteindre une destination située à une distance supérieure à la distance restante dans le réservoir.
+La formule de récurrence de la fonction coût C[u, q, g] permet de définir la valeur de la fonction pour le cas général où q est supérieur à 1, c'est-à-dire lorsqu'il y a plus d'un arrêt de remplissage. Dans ce cas, la valeur de C[u, q, g] est définie comme étant le minimum des coûts pour atteindre u à partir de tous les autres nœuds v de manière à utiliser q-1 arrêts de remplissage. Pour chaque nœud v, il y a deux possibilités :</p>
+<ul>
+<li>Si le coût de l'essence au nœud v est inférieur ou égal au coût de l'essence au nœud u, alors nous devons arriver à u avec un réservoir vide en empruntant le plus court chemin entre u et v. Dans ce cas, la valeur de C[u, q, g] est définie comme étant la valeur de C[v, q-1, 0] plus la distance entre u et v moins g multipliée par le coût de l'essence au nœud u.</li>
+<li>Si le coût de l'essence au nœud v est supérieur au coût de l'essence au nœud u, alors nous devons arriver à u avec la capacité maximale du réservoir moins la distance entre u et v. Dans ce cas, la valeur de C[u, q, g] est définie comme étant la valeur de C[v, q-1, U-d(u,v)] plus la capacité maximale du réservoir moins g multipliée par le coût de l'essence au nœud u.</li>
+</ul>
+<h3 id="q10">Q10.</h3>
+<p>GV(s) = [0]<br>
+GV(1) = [0, 24, 28, 1, 5, 7]<br>
+GV(2) = [0, 22, 5, 6] <br>
+GV(3) = [0, 17, 26] <br>
+GV(4) = [0, 3, 19, 7, 0, 26, 11]<br>
+GV(5) = [0, 6, 22, 21, 14, 26, 28, 24, 25] <br>
+GV(6) = [0, 10, 2, 16, 14, 12, 28]<br>
+GV(7) = [0, 28] <br>
+GV(8) = [0] <br>
+GV(t) = [0, 11, 9, 16, 25, 28]<br></p>
+<h3 id="q11">Q11.</h3>
+<p>(Question non traitée).</p>
+<h3 id="q12">Q12.</h3>
+<p>On considère que la fonction d(w, u) qui renvoit la distance du plus court chemin entre w et u. On considère un graphe à n sommets, et la fonction getPrix(sommet) avec sommet ∈ 0..n, qui renvoit le prix de l’essence d’un sommet du graphe (d’une station service). Et U la capacité du réservoir.
+Ici on définit donx l’algorithme d’une fonction C(u, q, g) qui renvoit le coût minimum d’un voyage de u à t, en utilisant q arrêts pour remplir le réservoir, en sachant que l’on arrive avec g unité d’essence.</p>
+<pre class="hljs"><code><div>Si q = 1 alors
+	distance ← d(u, t)
+	Si g ⩽ distance ⩽ U alors
+		retourner ((distance - g) * getPrix(u))
+	Sinon
+		retourner +ꝏ
+	Finsi
+Sinon
+	min ← +ꝏ
+	c ← +ꝏ 
+	Pour sommet allant de 0 à n-1 faire
+		distance ← d(u, v)
+		Si sommet ≠ u et d ⩽ U alors
+			Si getPrix(sommet) ⩽ getPrix(u) et g ⩽ distance alors
+				c ← C(v, q-1, 0) + (distance - g) * getPrix(u)
+			Sinon 
+Si prix[v] &gt; prix[u] alors
+					c ← C(v, q-1, U - distance) + (U - g)* getPrix(u)
+				FSi
+			FSi
+			Si c &lt; min alors
+				min ← c
+			FSi
+	FSi
+	FPour
+	Retourner min
+FSi
+</div></code></pre>
+<p>Ensuite on lance donc C(0, X, 0), avec X le nombre d’arrêts autorisés, puis X-1 etc jusqu’à 0.
+On prends donc la valeur optimal à la fin des différentes éxécutions.</p>
+<h3 id="q13">Q13.</h3>
+<p>Voici l'implémentation en Python :</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> math
+<span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> deque
+
+<span class="hljs-comment"># Constantes de mon programme</span>
+U = <span class="hljs-number">40</span>  <span class="hljs-comment"># Réservoir</span>
+NB_ARRETS_AUTORISE = <span class="hljs-number">3</span>  <span class="hljs-comment"># Nombre d'arrêts autorisés</span>
+<span class="hljs-comment"># Prix de chacunes des stations, de s à t, on mets t à +inf car il est impossible d'y faire le plein.</span>
+PRICES = [<span class="hljs-number">10</span>, <span class="hljs-number">26</span>, <span class="hljs-number">19</span>, <span class="hljs-number">22</span>, <span class="hljs-number">29</span>, <span class="hljs-number">39</span>, <span class="hljs-number">37</span>, <span class="hljs-number">11</span>, <span class="hljs-number">10</span>, math.inf]
+
+<span class="hljs-comment"># Matrice d'adjacence représentant le graphe, avec 0 pour dire qu'il n'y a pas d'arête.</span>
+GRAPH = [
+    [<span class="hljs-number">0</span>, <span class="hljs-number">16</span>, <span class="hljs-number">18</span>, <span class="hljs-number">23</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],
+    [<span class="hljs-number">16</span>, <span class="hljs-number">0</span>, <span class="hljs-number">12</span>, <span class="hljs-number">0</span>, <span class="hljs-number">21</span>, <span class="hljs-number">18</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],
+    [<span class="hljs-number">18</span>, <span class="hljs-number">12</span>, <span class="hljs-number">0</span>, <span class="hljs-number">14</span>, <span class="hljs-number">0</span>, <span class="hljs-number">19</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],
+    [<span class="hljs-number">23</span>, <span class="hljs-number">0</span>, <span class="hljs-number">14</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">26</span>, <span class="hljs-number">24</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],
+    [<span class="hljs-number">0</span>, <span class="hljs-number">21</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">14</span>, <span class="hljs-number">0</span>, <span class="hljs-number">14</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],
+    [<span class="hljs-number">0</span>, <span class="hljs-number">18</span>, <span class="hljs-number">19</span>, <span class="hljs-number">26</span>, <span class="hljs-number">14</span>, <span class="hljs-number">0</span>, <span class="hljs-number">12</span>, <span class="hljs-number">16</span>, <span class="hljs-number">15</span>, <span class="hljs-number">0</span>],
+    [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">24</span>, <span class="hljs-number">0</span>, <span class="hljs-number">12</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">12</span>, <span class="hljs-number">0</span>],
+    [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">14</span>, <span class="hljs-number">16</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">12</span>, <span class="hljs-number">15</span>],
+    [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">15</span>, <span class="hljs-number">12</span>, <span class="hljs-number">12</span>, <span class="hljs-number">0</span>, <span class="hljs-number">12</span>],
+    [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">15</span>, <span class="hljs-number">12</span>, <span class="hljs-number">0</span>],
+]
+
+<span class="hljs-comment"># Implémentation de Djikstra</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">d</span><span class="hljs-params">(w, u)</span>:</span>
+    process, result = deque(), deque()
+    parent, distance, visit = [<span class="hljs-number">-1</span>] * \
+        len(GRAPH), [math.inf] * len(GRAPH), [<span class="hljs-literal">False</span>] * len(GRAPH)
+    distance[w], visit[w] = <span class="hljs-number">0</span>, <span class="hljs-literal">True</span>
+    process.append(w)
+    <span class="hljs-keyword">while</span> process:
+        node = process.popleft()
+        shortest = distance[process[<span class="hljs-number">0</span>]] <span class="hljs-keyword">if</span> process <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>
+        <span class="hljs-keyword">if</span> node == u:
+            result.append(u)
+            back = parent[u]
+            <span class="hljs-keyword">while</span> back != <span class="hljs-number">-1</span>:
+                result.append(back)
+                back = parent[back]
+            <span class="hljs-keyword">return</span> distance[u]
+
+        <span class="hljs-keyword">for</span> n, d <span class="hljs-keyword">in</span> enumerate(GRAPH[node]):
+            <span class="hljs-keyword">if</span> d <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> visit[n]:
+                distance[n], visit[n], parent[n] = distance[node] + \
+                    d, <span class="hljs-literal">True</span>, node
+                <span class="hljs-keyword">if</span> distance[n] &lt;= shortest:
+                    process.appendleft(n)
+                <span class="hljs-keyword">else</span>:
+                    process.append(n)
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+
+
+<span class="hljs-comment"># Implémentation de C</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">C</span><span class="hljs-params">(u, q, g)</span>:</span>
+    <span class="hljs-comment"># Implémentation de l'initialisation</span>
+    <span class="hljs-keyword">if</span> q == <span class="hljs-number">1</span>:
+        dist = d(u, <span class="hljs-number">9</span>)
+        <span class="hljs-keyword">if</span> g &lt;= dist &lt;= U:
+            <span class="hljs-keyword">return</span> (dist - g) * PRICES[u], [u]
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">return</span> math.inf, []
+    <span class="hljs-comment"># Implémentation de la récurrence</span>
+    <span class="hljs-keyword">else</span>:
+        min = math.inf
+        c = math.inf
+        result = []
+        <span class="hljs-keyword">for</span> vertice <span class="hljs-keyword">in</span> range(len(GRAPH)):
+            dist = d(u, vertice)
+            <span class="hljs-keyword">if</span> vertice != u <span class="hljs-keyword">and</span> dist &lt;= U:
+                c, path = C(vertice, q<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>)
+                c += (dist - g) * PRICES[u]
+                path = [u] + path
+                <span class="hljs-keyword">if</span> PRICES[vertice] &gt; PRICES[u]:
+                    c, path = C(vertice, q<span class="hljs-number">-1</span>, U-dist)
+                    c += (U - g) * PRICES[u]
+                    path = [u] + path
+                <span class="hljs-keyword">if</span> c &lt; min:
+                    min = c
+                    result = path
+        <span class="hljs-keyword">return</span> min, result
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span>:</span>
+    res, path = C(<span class="hljs-number">0</span>, NB_ARRETS_AUTORISE, <span class="hljs-number">0</span>)
+    print(<span class="hljs-string">"La solution optimale de s à t avec au plus 3 arrêts est de "</span> +
+          str(res/<span class="hljs-number">100</span>) + <span class="hljs-string">" €"</span>)
+    print(<span class="hljs-string">"Liste des arrêts :"</span>, path)
+
+
+solve()
+</div></code></pre>
+<h3 id="q14">Q14.</h3>
+<p>On obtient la sortie suivante de notre programme avec NB_ARRETS_AUTORISE = 1 :<br>
+La solution optimale de s à t avec au plus 3 arrêts est de inf €<br>
+Liste des arrêts : []<br>
+On obtient la sortie suivante de notre programme avec NB_ARRETS_AUTORISE = 2 :<br>
+La solution optimale de s à t avec au plus 3 arrêts est de 11.54 €<br>
+Liste des arrêts : [0, 4]<br>
+On obtient la sortie suivante de notre programme avec NB_ARRETS_AUTORISE = 3 :<br>
+La solution optimale de s à t avec au plus 3 arrêts est de 7.48 €<br>
+Liste des arrêts : [0, 2, 8]<br>
+On obtient la sortie suivante de notre programme avec NB_ARRETS_AUTORISE = 4 :<br>
+La solution optimale de s à t avec au plus 3 arrêts est de 6.28 €<br>
+Liste des arrêts : [0, 2, 5, 8]<br></p>
+<p>Voici les détails de la solution optimale en 3 arrêts au plus :<br>
+Coût de la solution : 7.48€.<br>
+Itinéraire : 0 -&gt; 2 -&gt; 5 -&gt; 8.<br>
+Les arrêts aux sommets (stations-service) : 0, 2 et 8.<br>
+Quantité remplies à chaque arrêts respectivement à la liste du dessus (0, 2 et 8) : 40, 12, 12<br></p>
+<h3 id="q15">Q15.</h3>
+<p>La fonction C est de compléxité O(n), et utilise elle même Djikstra, Djikstra étant lui aussi de compléxité polynomial, mon programme est donc de compléxité O(n²).</p>
+
+</body>
+</html>
