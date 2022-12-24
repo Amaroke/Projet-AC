@@ -223,16 +223,16 @@ solve()
 ### Q14.
 
 On obtient la sortie suivante de notre programme avec NB_ARRETS_AUTORISE = 1 :<br>
-    La solution optimale de s à t avec au plus 3 arrêts est de inf €<br>
+    La solution optimale de s à t avec au plus 1 arrêt est de inf €<br>
     Liste des arrêts : []<br>
 On obtient la sortie suivante de notre programme avec NB_ARRETS_AUTORISE = 2 :<br>
-    La solution optimale de s à t avec au plus 3 arrêts est de 11.54 €<br>
+    La solution optimale de s à t avec au plus 2 arrêts est de 11.54 €<br>
     Liste des arrêts : [0, 4]<br>
 On obtient la sortie suivante de notre programme avec NB_ARRETS_AUTORISE = 3 :<br>
     La solution optimale de s à t avec au plus 3 arrêts est de 7.48 €<br>
     Liste des arrêts : [0, 2, 8]<br>
 On obtient la sortie suivante de notre programme avec NB_ARRETS_AUTORISE = 4 :<br>
-    La solution optimale de s à t avec au plus 3 arrêts est de 6.28 €<br>
+    La solution optimale de s à t avec au plus 4 arrêts est de 6.28 €<br>
     Liste des arrêts : [0, 2, 5, 8]<br>
 
 Voici les détails de la solution optimale en 3 arrêts au plus :<br>
