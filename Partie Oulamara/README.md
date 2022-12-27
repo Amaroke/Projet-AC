@@ -29,10 +29,10 @@ Cout de la solution optimale = C[t, Q, 0]
 
 ### Q4.
 
-C[u, q, g] = min { C[v, q-1, h] + c(u) * (U-h) + d(u, v) }
+C[u, q, g] = min { C[v, q-1, h] + c(u) * (U-h) + cost(u, v) }
 pour tous les sommets v atteignables depuis u avec une quantité d'essence h dans le réservoir (h ≤ U).
 
-C[v, q-1, h] représente le coût minimum du voyage pour partir de v à t en utilisant q-1 arrêts pour remplir le réservoir, sachant qu'on arrive à v avec h unités d'essence (km). c(u) est le coût de l'essence au sommet u et d(u, v) est la distance entre les sommets u et v. U est la capacité du réservoir, c'est-à-dire la distance totale que peut parcourir le véhicule avec un réservoir plein.
+C[v, q-1, h] représente le coût minimum du voyage pour partir de v à t en utilisant q-1 arrêts pour remplir le réservoir, sachant qu'on arrive à v avec h unités d'essence (km). c(u) est le coût de l'essence au sommet u et cost(u, v) est le coût associé à la distance entre les sommets u et v. U est la capacité du réservoir, c'est-à-dire la distance totale que peut parcourir le véhicule avec un réservoir plein.
 
 ### Q5.
 
@@ -41,15 +41,14 @@ u = s (sommet de départ), alors C[s, q, g] = 0 pour tous les entiers q et g. Ce
 
 ### Q6.
 
-La complexité de ce programme dynamique sera en O(V * K * U), où V est le nombre de sommets du graphe et K et U sont respectivement le nombre maximal d'arrêts pour remplir le réservoir et la capacité du réservoir. Cette complexité est due au fait que nous devons parcourir tous les sommets du graphe, tous les arrêts possibles pour remplir le réservoir et toutes les quantités d'essence possibles (de 0 à U) pour remplir la table de la fonction coût C[u, q, g].
+La complexité dépend de plusieurs facteurs, ici cela dépend du nombre de sommets V, de son cardinal noté K, U la capacité maximum du réservoir et q le nombre d’arrêts autorisés. On a donc:
+O(V*K*U*q)  
 
 ### Q7.
 
-Au lieu de considérer chaque valeur de g ∈ [0,U], nous pouvons choisir de discrétiser les valeurs de g en tranches de X unités (par exemple, X = 10). Cela signifie que nous considérerons uniquement les valeurs de g qui sont multiples de X (par exemple, 0, 10, 20, 30, etc.).
-En utilisant cette approche de discrétisation, nous réduisons le nombre de valeurs de g que nous devons considérer, ce qui peut réduire la complexité de notre programme dynamique.
-Cependant, même avec la discrétisation des valeurs de g, l'utilisation de l'état C[u, q, g] peut encore mener à un programme dynamique de complexité pseudo-polynomial. En effet, la complexité de ce programme dynamique dépend toujours du nombre de sommets du graphe V et du nombre maximal d'arrêts pour remplir le réservoir K. Si V et K sont des entiers de grande taille, la complexité de notre programme dynamique peut être encore considérée comme pseudo-polynomiale.
-Par exemple, si V = 10000 et K = 1000, la complexité de notre programme dynamique sera en O(V * K * U / X) = O(10^9), ce qui est encore considéré comme pseudo-polynomial.
-En conclusion, même avec la discrétisation des valeurs de g, l'utilisation de l'état C[u, q, g] peut encore mener à un programme dynamique de complexité pseudo-polynomiale si V et K sont des entiers de grande taille.
+La complexité de ce programme dynamique dépend toujours du nombre de sommets du graphe V et du nombre maximal d'arrêts pour remplir le réservoir q. Si V et q sont des entiers de grande taille, la complexité de notre programme dynamique peut être encore considérée comme pseudo-polynomiale. 
+
+Par exemple, si V = 10000 et q = 1000, la complexité de notre programme dynamique sera en O(V * K * U* q / X) = O(10^9), ce qui est encore considéré comme pseudo-polynomial.
 
 ### Q8.
 
