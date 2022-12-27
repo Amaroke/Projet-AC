@@ -389,20 +389,18 @@ sachant qu’on arrive à u avec g unités d'essence (km) et u est l'un des q ar
 <li>et g doit être égal à 0, car la stratégie optimale consiste à arriver à destination t avec un réservoir vide.</li>
 </ul>
 <h3 id="q4">Q4.</h3>
-<p>C[u, q, g] = min { C[v, q-1, h] + c(u) * (U-h) + d(u, v) }
+<p>C[u, q, g] = min { C[v, q-1, h] + c(u) * (U-h) + cost(u, v) }
 pour tous les sommets v atteignables depuis u avec une quantité d'essence h dans le réservoir (h ≤ U).</p>
-<p>C[v, q-1, h] représente le coût minimum du voyage pour partir de v à t en utilisant q-1 arrêts pour remplir le réservoir, sachant qu'on arrive à v avec h unités d'essence (km). c(u) est le coût de l'essence au sommet u et d(u, v) est la distance entre les sommets u et v. U est la capacité du réservoir, c'est-à-dire la distance totale que peut parcourir le véhicule avec un réservoir plein.</p>
+<p>C[v, q-1, h] représente le coût minimum du voyage pour partir de v à t en utilisant q-1 arrêts pour remplir le réservoir, sachant qu'on arrive à v avec h unités d'essence (km). c(u) est le coût de l'essence au sommet u et cost(u, v) est le coût associé à la distance entre les sommets u et v. U est la capacité du réservoir, c'est-à-dire la distance totale que peut parcourir le véhicule avec un réservoir plein.</p>
 <h3 id="q5">Q5.</h3>
 <p>Pour initialiser la fonction coût C[u, q, g], nous pouvons utiliser les valeurs suivantes :
 u = s (sommet de départ), alors C[s, q, g] = 0 pour tous les entiers q et g. Cette initialisation correspond au cas où nous sommes au sommet de départ et n'avons pas encore entamé notre voyage. On peut également mettre g = 0, c’est ce que nous avons déterminer à la Q1.</p>
 <h3 id="q6">Q6.</h3>
-<p>La complexité de ce programme dynamique sera en O(V * K * U), où V est le nombre de sommets du graphe et K et U sont respectivement le nombre maximal d'arrêts pour remplir le réservoir et la capacité du réservoir. Cette complexité est due au fait que nous devons parcourir tous les sommets du graphe, tous les arrêts possibles pour remplir le réservoir et toutes les quantités d'essence possibles (de 0 à U) pour remplir la table de la fonction coût C[u, q, g].</p>
+<p>La complexité dépend de plusieurs facteurs, ici cela dépend du nombre de sommets V, de son cardinal noté K, U la capacité maximum du réservoir et q le nombre d’arrêts autorisés. On a donc:
+O(V * K * U * q)</p>
 <h3 id="q7">Q7.</h3>
-<p>Au lieu de considérer chaque valeur de g ∈ [0,U], nous pouvons choisir de discrétiser les valeurs de g en tranches de X unités (par exemple, X = 10). Cela signifie que nous considérerons uniquement les valeurs de g qui sont multiples de X (par exemple, 0, 10, 20, 30, etc.).
-En utilisant cette approche de discrétisation, nous réduisons le nombre de valeurs de g que nous devons considérer, ce qui peut réduire la complexité de notre programme dynamique.
-Cependant, même avec la discrétisation des valeurs de g, l'utilisation de l'état C[u, q, g] peut encore mener à un programme dynamique de complexité pseudo-polynomial. En effet, la complexité de ce programme dynamique dépend toujours du nombre de sommets du graphe V et du nombre maximal d'arrêts pour remplir le réservoir K. Si V et K sont des entiers de grande taille, la complexité de notre programme dynamique peut être encore considérée comme pseudo-polynomiale.
-Par exemple, si V = 10000 et K = 1000, la complexité de notre programme dynamique sera en O(V * K * U / X) = O(10^9), ce qui est encore considéré comme pseudo-polynomial.
-En conclusion, même avec la discrétisation des valeurs de g, l'utilisation de l'état C[u, q, g] peut encore mener à un programme dynamique de complexité pseudo-polynomiale si V et K sont des entiers de grande taille.</p>
+<p>La complexité de ce programme dynamique dépend toujours du nombre de sommets du graphe V et du nombre maximal d'arrêts pour remplir le réservoir q. Si V et q sont des entiers de grande taille, la complexité de notre programme dynamique peut être encore considérée comme pseudo-polynomiale.</p>
+<p>Par exemple, si V = 10000 et q = 1000, la complexité de notre programme dynamique sera en O(V * K * U* q / X) = O(10^9), ce qui est encore considéré comme pseudo-polynomial.</p>
 <h3 id="q8">Q8.</h3>
 <p>Pour montrer que la stratégie proposée est optimale pour décider de la quantité d'essence à remplir à chaque arrêt, nous allons utiliser une démonstration par l'absurde. Nous allons supposer que la stratégie proposée n'est pas optimale et montrer que cela contredit l'hypothèse selon laquelle la solution optimale utilise au plus k arrêts.</p>
 <p>Commençons par l'arrêt ul, où nous devons remplir juste assez d'essence pour atteindre t avec un réservoir vide. Si nous remplissons plus d'essence que ce qui est nécessaire, cela signifie que nous avons acheté de l'essence à un coût supérieur à ce qui était nécessaire. Cela implique que nous aurons un coût total plus élevé que la solution optimale, ce qui contredit l'hypothèse selon laquelle la solution optimale utilise au plus k arrêts.</p>
