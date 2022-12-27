@@ -42,7 +42,7 @@ u = s (sommet de départ), alors C[s, q, g] = 0 pour tous les entiers q et g. Ce
 ### Q6.
 
 La complexité dépend de plusieurs facteurs, ici cela dépend du nombre de sommets V, de son cardinal noté K, U la capacité maximum du réservoir et q le nombre d’arrêts autorisés. On a donc:
-O(V*K*U*q)  
+O(V * K * U * q)  
 
 ### Q7.
 
